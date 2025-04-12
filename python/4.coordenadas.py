@@ -3,10 +3,10 @@ import cv2
 import csv
 import tkinter as tk
 from tkinter import messagebox, BooleanVar
-from config import carpeta_imagenes
+carpeta_imagenes = r"D:\Tesis\imagenes"
 
 # Nombre del archivo CSV donde se guardarán las coordenadas
-nombre_csv = "boundingbox.csv"
+nombre_csv = r"D:\Tesis\csv\boundingbox_P3X-ACTIVE.csv"
 
 # Cargar datos existentes desde el archivo CSV
 def cargar_datos_csv(nombre_csv):

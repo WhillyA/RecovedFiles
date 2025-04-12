@@ -7,8 +7,8 @@ import shutil
 import datetime
 #cambiar de latop a usb remplaza F:\INFORMATICA\Taller 1 ---> G:
 # Configuración inicial
-carpeta_imagenes = r'F:\INFORMATICA\Taller 1\FotosP3X-prueba\class_3'
-nombre_csv = "boundingbox_P3X-final.csv"
+carpeta_imagenes = r'D:\Tesis\imagenes\class_3'
+nombre_csv = r"D:\Tesis\csv\boundingbox_P3X-final.csv"
 clases = {
     'cantidad': (0, 0, 255),
     'detalle': (0, 255, 0),

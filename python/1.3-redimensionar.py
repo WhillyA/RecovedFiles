@@ -40,7 +40,7 @@ def compress_and_resize_images(input_folder, output_folder, quality, max_size):
 
             print(f"Processed: {filename}")
 
-# Uso
+# Uso rutaI ruta de imaganes input, rutaS ruta de salida
 rutaI = r"F:\INFORMATICA\Taller 1\FotosP3X"
 rutaS = r"F:\INFORMATICA\Taller 1\FotosP3X-prueba"
 quality = 100
