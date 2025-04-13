@@ -7,7 +7,7 @@ import subprocess
 REPO_PATH = r"C:\Users\_AnTrAx_\Documents\GitHub\RecovedFiles"  # Ruta local del repositorio
 SOURCE_DIRS = {  # Directorios origen de tus archivos
     'python': r"D:\Tesis\python",
-    'docx': r"D:\Tesis\word",
+    'docx': r"D:\Tesis\docx",
     'csv': r"D:\Tesis\csv"
 }
 
