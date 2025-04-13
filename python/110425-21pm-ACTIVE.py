@@ -8,8 +8,8 @@ import datetime
 #codigo para generar recuadros csv para yolo5 de la subseccion 3 
 #cambiar de latop a usb remplaza F:\INFORMATICA\Taller 1 ---> G:
 # Configuración inicial
-carpeta_imagenes = r'D:\Tesis\imagenes\class_3'
-nombre_csv = r"D:\Tesis\csv\boundingbox_P3X-final.csv"
+carpeta_imagenes = r"./imagenes/class_3"
+nombre_csv = r"./csv/boundingbox_P3X-final.csv"
 clases = {
     'cantidad': (0, 0, 255),
     'detalle': (0, 255, 0),
@@ -37,7 +37,7 @@ class AplicacionEtiquetado:
         # Cargar datos existentes
         self.datos = self._cargar_datos_csv()
 
-         # Nueva línea añadida aquí:
+        # Nueva línea añadida aquí:
         self.indice_imagen_actual = self._obtener_primer_sin_etiquetar()
         
         # Configurar interfaz
@@ -46,7 +46,7 @@ class AplicacionEtiquetado:
     
     def _cargar_imagenes(self):
         return [f for f in os.listdir(carpeta_imagenes) 
-               if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+            if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
     
     # Añade este nuevo método en la clase
     def _obtener_primer_sin_etiquetar(self):

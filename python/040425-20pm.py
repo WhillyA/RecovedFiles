@@ -38,7 +38,7 @@ class AplicacionEtiquetado:
     
     def _cargar_imagenes(self):
         return [f for f in os.listdir(carpeta_imagenes) 
-               if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+            if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
     
     def _cargar_datos_csv(self):
         datos = {}

@@ -5,9 +5,9 @@ from tqdm import tqdm
 
 # Configuración (actualiza estas rutas según tu caso)
 # codigo para organizar en carpertas para el entrenamiento en yolo 5 clase3
-carpeta_imagenes = r'G:\FotosP3X-prueba\class_3'  # Carpeta original de imágenes
-carpeta_txt = "labels"               # Carpeta de etiquetas generadas por el primer script
-carpeta_destino = "yolov5_dataset"   # Carpeta raíz para el dataset final
+carpeta_imagenes = "./imagenes/class_3"   # Carpeta original de imágenes
+carpeta_txt = "./imagenes/class_3/regions-labels/labels"              # Carpeta de etiquetas generadas por el primer script
+carpeta_destino = "./datasets/yolov5_subclass3"   # Carpeta raíz para el dataset final
 p_train = 0.7  # Porcentaje entrenamiento
 p_val = 0.2    # Porcentaje validación (test será 1 - train - val)
 

@@ -3,10 +3,12 @@ import csv
 import cv2
 
 # Configuración inicial
-carpeta_imagenes = r'G:\FotosP3X-prueba\class_3'
-nombre_csv = "boundingbox_P3X-final.csv"
-output_txt_dir = "labels"       # Directorio para los TXT de YOLO
-regions_dir = "regions"         # Directorio principal para las regiones
+#?aca esta codigo que genera los labels para yolo 5
+carpeta_imagenes = "./imagenes/class_3"  # Carpeta de imágenes
+#?aca esta el nombre del csv que contiene los bounding boxes        
+nombre_csv = "./csv/boundingbox_P3X-final.csv"
+output_txt_dir = "./imagenes/class_3/regions-labels/labels"       # Directorio para los TXT de YOLO
+regions_dir = "./imagenes/class_3/regions-labels/regions"         # Directorio principal para las regiones
 #las carpetas se crean donde ester boundingbox_P3X-final.csv
 # Mapeo de clases a IDs
 class_ids = {
