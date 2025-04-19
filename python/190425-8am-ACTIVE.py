@@ -18,8 +18,8 @@ class ImageLabeler:
         
         # Cargar imágenes
         self.image_files = sorted(glob.glob(os.path.join(image_folder, '*.[jJ][pP][gG]')) + \
-                          sorted(glob.glob(os.path.join(image_folder, '*.[jJ][pP][eE][gG]')) + \
-                          sorted(glob.glob(os.path.join(image_folder, '*.[pP][nN][gG]')))))
+                        sorted(glob.glob(os.path.join(image_folder, '*.[jJ][pP][eE][gG]')) + \
+                        sorted(glob.glob(os.path.join(image_folder, '*.[pP][nN][gG]')))))
         
         # Cargar progreso existente
         self.existing_data = self.load_existing_data()
