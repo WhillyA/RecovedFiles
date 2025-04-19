@@ -5,22 +5,20 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 import shutil
 import datetime
-#?codigo para generar recuadros csv para yolo5 de la subseccion 3 
+#?codigo para generar recuadros csv de numero y unidades para yolo5 de la subseccion 3 cantidad
 #cambiar de latop a usb remplaza F:\INFORMATICA\Taller 1 ---> G:
 # Configuración inicial
-carpeta_imagenes = r"./imagenes/class_3"
-nombre_csv = r"./csv/boundingbox_P3X-final.csv"
+carpeta_imagenes = r"./imagenes/class_3/regions-labels/regions/detalle"
+nombre_csv = r"./csv/boundingbox_P3X-final_Detalle_numero.csv"
 clases = {
-    'cantidad': (0, 0, 255),
-    'detalle': (0, 255, 0),
-    'preciou': (255, 0, 0),
-    'preciot': (0, 255, 255)
+    'palabra': (0, 0, 255),
+    'numero': (0, 255, 0),
 }
 
 class AplicacionEtiquetado:
     def __init__(self, root):
         self.root = root
-        self.root.title("Editor de Etiquetas Avanzado")
+        self.root.title("seleccion de palabraas y numeros")
 
         self._crear_respaldo_csv() 
         
@@ -30,7 +28,7 @@ class AplicacionEtiquetado:
         # Variables de estado
         self.imagenes = self._cargar_imagenes()
         #self.indice_imagen_actual = 0
-        self.clase_actual = 'cantidad'
+        self.clase_actual = 'palabra'
         self.recuadros = []
         self.puntos_temporales = []
         

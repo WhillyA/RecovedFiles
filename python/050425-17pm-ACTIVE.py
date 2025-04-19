@@ -4,7 +4,7 @@ import numpy as np
 from tqdm import tqdm
 
 # Configuración (actualiza estas rutas según tu caso)
-# codigo para organizar en carpertas para el entrenamiento en yolo 5 clase3
+#? codigo para organizar en carpertas para el entrenamiento en yolo 5 clase3
 carpeta_imagenes = "./imagenes/class_3"   # Carpeta original de imágenes
 carpeta_txt = "./imagenes/class_3/regions-labels/labels"              # Carpeta de etiquetas generadas por el primer script
 carpeta_destino = "./datasets/yolov5_subclass3"   # Carpeta raíz para el dataset final
