@@ -3,7 +3,7 @@ import shutil
 from datetime import datetime
 import subprocess
 
-# Configuración
+#? Configuración para subir al repositorio de GitHub
 REPO_PATH = r"C:\Users\_AnTrAx_\Documents\GitHub\RecovedFiles"  # Ruta local del repositorio
 SOURCE_DIRS = {  # Directorios origen de tus archivos
     'python': r"D:\Tesis\python",
