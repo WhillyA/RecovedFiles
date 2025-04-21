@@ -204,7 +204,7 @@ class AplicacionEtiquetado:
             cv2.rectangle(imagen, (x1, y1), (x2, y2), color, 2)
             cv2.putText(
                 imagen,
-                recuadro['clase'],
+                recuadro['clase'][0],
                 (x1 + 5, y1 + 15),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.5, color, 1
