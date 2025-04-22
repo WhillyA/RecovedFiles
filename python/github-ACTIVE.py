@@ -4,11 +4,11 @@ from datetime import datetime
 import subprocess
 
 # Configuración
-REPO_PATH = r"C:\Users\_AnTrAx_\Documents\GitHub\RecovedFiles"  # Ruta local del repositorio
+REPO_PATH = r"C:\Users\AnTrAx\Documents\GitHub\RecovedFiles"  # Ruta local del repositorio
 SOURCE_DIRS = {  # Directorios origen de tus archivos
-    'python': r"D:\Tesis\python",
-    'docx': r"D:\Tesis\docx",
-    'csv': r"D:\Tesis\csv"
+    'python': r"F:\INFORMATICA\Taller 1\tesis\python",
+    'docx': r"F:\INFORMATICA\Taller 1\tesis\docx",
+    'csv': r"F:\INFORMATICA\Taller 1\tesis\csv"
 }
 
 # Copiar archivos modificados o nuevos al repositorio

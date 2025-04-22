@@ -6,12 +6,12 @@ import pandas as pd
 import datetime
 
 # Ruta de imágenes y CSV
-IMAGE_FOLDER = "F:\INFORMATICA\Taller 1\FotosP3X-prueba\class_3"
+IMAGE_FOLDER = "./imagenes/class_3/regions-labels/regions/cantidad"
 CSV_FILE = "./csv/etiquetas.csv"
 
 # Crear respaldo del CSV si ya existe
 if os.path.exists(CSV_FILE):
-    fecha = datetime.datetime.now().strftime("%y%m%d")
+    fecha = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     respaldo = f"etiquetas-{fecha}.csv"
     pd.read_csv(CSV_FILE).to_csv(respaldo, index=False)
 
