@@ -5,20 +5,21 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 import shutil
 import datetime
-#?codigo para generar recuadros csv de palabras clas3 detalle, se puede usar para cantidad, preciou, preciot tambien 
+#?codigo para generar recuadros csv de numero y unidades para deteccion de nunmeor para yolo5 de la subseccion 3 cantidad
+#?simbolos / . y numeros / 0-9
 #cambiar de latop a usb remplaza F:\INFORMATICA\Taller 1 ---> G:
 # Configuración inicial
-carpeta_imagenes = r"./imagenes/class_3/regions-labels/regions/detalle"
-nombre_csv = r"./csv/boundingbox_P3X-final_Detalle.csv"
+carpeta_imagenes = r"../imagenes/class_3/regions-labels/regions/cantidad/"
+nombre_csv = r"./csv/Detalle_numerosRNN.csv"
 clases = {
-    'palabra': (0, 0, 255),
-    'numero': (0, 255, 0),
+    'numeros': (0, 0, 255),
+    'simbolos': (0, 255, 0),
 }
 
 class AplicacionEtiquetado:
     def __init__(self, root):
         self.root = root
-        self.root.title("seleccion de palabraas y numeros")
+        self.root.title("seleccion de numeros y letras")
 
         self._crear_respaldo_csv() 
         
@@ -28,7 +29,7 @@ class AplicacionEtiquetado:
         # Variables de estado
         self.imagenes = self._cargar_imagenes()
         #self.indice_imagen_actual = 0
-        self.clase_actual = 'palabra'
+        self.clase_actual = 'numeros'
         self.recuadros = []
         self.puntos_temporales = []
         
@@ -204,7 +205,7 @@ class AplicacionEtiquetado:
             cv2.rectangle(imagen, (x1, y1), (x2, y2), color, 2)
             cv2.putText(
                 imagen,
-                recuadro['clase'],
+                recuadro['clase'][0],
                 (x1 + 5, y1 + 15),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.5, color, 1

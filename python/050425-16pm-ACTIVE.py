@@ -2,7 +2,7 @@ import os
 import csv
 import cv2
 
-# Configuración inicial
+#? codigo para generar imagnes de detalle--> cantindad, detalle, preciou, preciot
 #?aca esta codigo que genera los labels para yolo 5
 carpeta_imagenes = "./imagenes/class_3"  # Carpeta de imágenes
 #?aca esta el nombre del csv que contiene los bounding boxes        
