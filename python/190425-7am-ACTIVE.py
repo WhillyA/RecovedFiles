@@ -158,6 +158,14 @@ class AplicacionEtiquetado:
             text="Eliminar Último",
             command=self._eliminar_ultimo_recuadro
         ).pack(side=tk.LEFT, padx=5)
+
+        # Bindear teclas
+        self.root.bind('<Left>', lambda e: self._imagen_anterior())
+        self.root.bind('<Right>', lambda e: self._imagen_siguiente())
+        # Bindear teclas
+        
+        self.root.bind('<Key-1>', lambda e : self._cambiar_clase('numeros'))
+        self.root.bind('<Key-2>', lambda e : self._cambiar_clase('letras'))
     
     def _actualizar_imagen(self):
 
@@ -234,6 +242,7 @@ class AplicacionEtiquetado:
             x1, y1 = self.punto_inicial
             x2, y2 = x, y
             self.dibujando = False
+        
             
             # Ordenar coordenadas
             x1, x2 = sorted([x1, x2])
@@ -253,6 +262,33 @@ class AplicacionEtiquetado:
             self.datos[nombre_archivo].append(nuevo_recuadro)
             self.recuadros.append(nuevo_recuadro)
             self._dibujar_interfaz()
+
+        elif event == cv2.EVENT_RBUTTONDOWN:
+            # Obtener dimensiones de la imagen
+            altura, ancho = self.imagen_actual.shape[:2]
+            
+            # Crear recuadro de área completa
+            nuevo_recuadro = {
+                'x1': 0,
+                'y1': 0,
+                'x2': ancho,
+                'y2': altura,
+                'clase': self.clase_actual
+            }
+
+            # Obtener el nombre del archivo actual
+            nombre_archivo = self.imagenes[self.indice_imagen_actual]
+
+            # Guardar en datos
+            if nombre_archivo not in self.datos:
+                self.datos[nombre_archivo] = []
+            
+            self.datos[nombre_archivo].append(nuevo_recuadro)
+            self.recuadros.append(nuevo_recuadro)
+            
+            # Redibujar la interfaz
+            self._dibujar_interfaz()
+
     def _crear_respaldo_csv(self):
         #"""Crea una copia de seguridad del CSV con marca de tiempo"""
         if os.path.exists(nombre_csv):

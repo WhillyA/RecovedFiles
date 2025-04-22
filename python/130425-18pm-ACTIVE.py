@@ -41,6 +41,7 @@ class AplicacionEtiquetado:
         # Configurar interfaz
         self._configurar_interfaz()
         self._actualizar_imagen()
+        
     
     def _cargar_imagenes(self):
         return [f for f in os.listdir(carpeta_imagenes) 
