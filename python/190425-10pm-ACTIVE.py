@@ -2,7 +2,7 @@ import os
 import cv2
 import csv
 from datetime import datetime
-
+#?cofigo para saccar palabras y numeros de detalle de las imagenes de la clase 3
 csv_path = "./csv/boundingbox_P3X-final_Detalle.csv"
 imagenes_dir = "./imagenes/class_3/regions-labels/regions/detalle"
 output_dir = "./imagenes/class_3/regions-labels/regions/detalle/palabras_y_numeros"

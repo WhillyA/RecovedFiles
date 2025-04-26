@@ -6,7 +6,7 @@ from tkinter import messagebox, ttk
 import shutil
 import datetime
 from PIL import Image, ImageTk
-
+#?areas para yolov5 del 0 al 9
 # Configuración inicial
 carpeta_imagenes = r"./imagenes/class_3/regions-labels/regions/preciot"
 nombre_csv = r"./csv/Detalle_numerosRNN.csv"
@@ -22,7 +22,8 @@ clases = {
     '8': (0, 128, 255),  # celeste
     '9': (0, 255, 128),  # verde menta
     ',': (128, 128, 128),# gris
-    '/': (0, 0, 0),
+    '/': (0, 0, 0),#negro
+    '*': (200, 200, 100), # blanco
 }
 
 class AplicacionEtiquetado:
@@ -203,6 +204,7 @@ class AplicacionEtiquetado:
         self.root.bind('<Key-0>', lambda e: self._cambiar_clase('0'))
         self.root.bind('<Key-.>', lambda e: self._cambiar_clase(','))
         self.root.bind('<Key-/>', lambda e: self._cambiar_clase('/'))
+        self.root.bind('<Key-*>', lambda e: self._cambiar_clase('*'))
     
     def _actualizar_imagen(self):
         if not self.imagenes:
@@ -241,13 +243,13 @@ class AplicacionEtiquetado:
             x1, y1 = recuadro['x1'], recuadro['y1']
             x2, y2 = recuadro['x2'], recuadro['y2']
             self.canvas.create_rectangle(x1, y1, x2, y2, outline=color_hex, width=2)
-            self.canvas.create_text(x1+5, y1+15, text=recuadro['clase'], fill=color_hex, anchor=tk.NW, font=('Arial', 10))
+            self.canvas.create_text(x1+5, y1+15, text=recuadro['clase'], fill=color_hex, anchor=tk.NW, font=('Arial', 20))
     
     def _iniciar_dibujo(self, event):
         self.punto_inicial = (event.x, event.y)
         self.rect_temp = self.canvas.create_rectangle(
             event.x, event.y, event.x, event.y,
-            outline="#ffff00", dash=(4,4), width=1
+            outline="#ff0000", dash=(4,4), width=2
         )
     
     def _mover_mouse(self, event):

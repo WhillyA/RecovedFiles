@@ -87,7 +87,7 @@ class ImageLabeler:
         
         # Bindear teclas
         self.root.bind('<Left>', lambda e: self.prev_image())
-        self.root.bind('<Right>', lambda e: self.next_image())
+        self.root.bind('<space>', lambda e: self.next_image())
         self.root.bind('<Return>', lambda e: self.next_image())
 
     def load_image(self):

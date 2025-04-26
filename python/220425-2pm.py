@@ -9,11 +9,21 @@ import datetime
 #?simbolos / . y numeros / 0-9
 #cambiar de latop a usb remplaza F:\INFORMATICA\Taller 1 ---> G:
 # Configuración inicial
-carpeta_imagenes = r"../imagenes/class_3/regions-labels/regions/cantidad/"
+carpeta_imagenes = r"./imagenes/class_3/regions-labels/regions/preciot"
 nombre_csv = r"./csv/Detalle_numerosRNN.csv"
 clases = {
-    'numeros': (0, 0, 255),
-    'simbolos': (0, 255, 0),
+    '0': (255, 0, 0),    # rojo
+    '1': (0, 255, 0),    # verde
+    '2': (0, 0, 255),    # azul
+    '3': (255, 255, 0),  # amarillo
+    '4': (255, 0, 255),  # magenta
+    '5': (0, 255, 255),  # cian
+    '6': (255, 128, 0),  # naranja
+    '7': (128, 0, 255),  # violeta
+    '8': (0, 128, 255),  # celeste
+    '9': (0, 255, 128),  # verde menta
+    ',': (128, 128, 128),# gris
+    '/': (0, 0, 0),
 }
 
 class AplicacionEtiquetado:
@@ -29,7 +39,7 @@ class AplicacionEtiquetado:
         # Variables de estado
         self.imagenes = self._cargar_imagenes()
         #self.indice_imagen_actual = 0
-        self.clase_actual = 'numeros'
+        self.clase_actual = '0'
         self.recuadros = []
         self.puntos_temporales = []
         
@@ -159,6 +169,24 @@ class AplicacionEtiquetado:
             text="Eliminar Último",
             command=self._eliminar_ultimo_recuadro
         ).pack(side=tk.LEFT, padx=5)
+
+        # Bindear teclas
+        self.root.bind('<Left>', lambda e: self._imagen_anterior())
+        self.root.bind('<Right>', lambda e: self._imagen_siguiente())
+        # Bindear teclas
+        #? cambiar con el valor de clases
+        self.root.bind('<Key-1>', lambda e : self._cambiar_clase('1'))
+        self.root.bind('<Key-2>', lambda e : self._cambiar_clase('2'))        
+        self.root.bind('<Key-3>', lambda e : self._cambiar_clase('3'))
+        self.root.bind('<Key-4>', lambda e : self._cambiar_clase('4'))        
+        self.root.bind('<Key-5>', lambda e : self._cambiar_clase('5'))
+        self.root.bind('<Key-6>', lambda e : self._cambiar_clase('6'))
+        self.root.bind('<Key-7>', lambda e : self._cambiar_clase('7'))
+        self.root.bind('<Key-8>', lambda e : self._cambiar_clase('8'))
+        self.root.bind('<Key-9>', lambda e : self._cambiar_clase('9'))
+        self.root.bind('<Key-0>', lambda e : self._cambiar_clase('0'))
+        self.root.bind('<Key-.>', lambda e : self._cambiar_clase(','))
+        self.root.bind('<Key-/>', lambda e : self._cambiar_clase('/'))
     
     def _actualizar_imagen(self):
 
@@ -235,6 +263,7 @@ class AplicacionEtiquetado:
             x1, y1 = self.punto_inicial
             x2, y2 = x, y
             self.dibujando = False
+        
             
             # Ordenar coordenadas
             x1, x2 = sorted([x1, x2])
@@ -254,6 +283,33 @@ class AplicacionEtiquetado:
             self.datos[nombre_archivo].append(nuevo_recuadro)
             self.recuadros.append(nuevo_recuadro)
             self._dibujar_interfaz()
+
+        elif event == cv2.EVENT_RBUTTONDOWN:
+            # Obtener dimensiones de la imagen
+            altura, ancho = self.imagen_actual.shape[:2]
+            
+            # Crear recuadro de área completa
+            nuevo_recuadro = {
+                'x1': 0,
+                'y1': 0,
+                'x2': ancho,
+                'y2': altura,
+                'clase': self.clase_actual
+            }
+
+            # Obtener el nombre del archivo actual
+            nombre_archivo = self.imagenes[self.indice_imagen_actual]
+
+            # Guardar en datos
+            if nombre_archivo not in self.datos:
+                self.datos[nombre_archivo] = []
+            
+            self.datos[nombre_archivo].append(nuevo_recuadro)
+            self.recuadros.append(nuevo_recuadro)
+            
+            # Redibujar la interfaz
+            self._dibujar_interfaz()
+
     def _crear_respaldo_csv(self):
         #"""Crea una copia de seguridad del CSV con marca de tiempo"""
         if os.path.exists(nombre_csv):
