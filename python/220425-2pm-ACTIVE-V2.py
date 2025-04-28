@@ -191,7 +191,7 @@ class AplicacionEtiquetado:
         
         # Atajos de teclado
         self.root.bind('<Left>', lambda e: self._imagen_anterior())
-        self.root.bind('<Right>', lambda e: self._imagen_siguiente())
+        self.root.bind('<space>', lambda e: self._imagen_siguiente())
         self.root.bind('<Key-1>', lambda e: self._cambiar_clase('1'))
         self.root.bind('<Key-2>', lambda e: self._cambiar_clase('2'))        
         self.root.bind('<Key-3>', lambda e: self._cambiar_clase('3'))
