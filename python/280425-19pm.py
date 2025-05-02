@@ -2,92 +2,78 @@ import os
 import shutil
 import numpy as np
 from tqdm import tqdm
+import yaml
 
-# Configuración (actualiza estas rutas)
-carpeta_imagenes = "./dataset_yoloNumeros/images"  # Carpeta de imágenes
-carpeta_txt = "./dataset_yoloNumeros/labels"      # Carpeta de etiquetas .txt
-carpeta_destino = "./dataset_yolo_split"                               # Carpeta destino final
-porcentajes = [0.7, 0.2, 0.1]  # [train, val, test]
+# CONFIGURACIÓN (ajusta según tus carpetas locales)
+carpeta_imagenes = "./dataset_yoloNumeros/images"
+carpeta_txt = "./dataset_yoloNumeros/labels"
+carpeta_destino = "./dataset_yolo_split"
+porcentajes = [0.7, 0.2, 0.1]  # train, val, test
+class_names = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '/', '*']
+N_CLASSES = len(class_names)
 
 def crear_estructura():
-    """Crea la estructura de directorios requerida por YOLOv5"""
     for subset in ['train', 'val', 'test']:
-        os.makedirs(os.path.join(carpeta_destino, 'images', subset), exist_ok=True)
-        os.makedirs(os.path.join(carpeta_destino, 'labels', subset), exist_ok=True)
+        for tipo in ['images', 'labels']:
+            ruta = os.path.join(carpeta_destino, tipo, subset)
+            os.makedirs(ruta, exist_ok=True)
+
+def limpiar_directorios():
+    for subset in ['train', 'val', 'test']:
+        for tipo in ['images', 'labels']:
+            ruta = os.path.join(carpeta_destino, tipo, subset)
+            for archivo in os.listdir(ruta):
+                os.remove(os.path.join(ruta, archivo))
 
 def dividir_dataset():
     crear_estructura()
-    
-    # Obtener lista de archivos base (sin extensión)
-    archivos = [f.split('.')[0] for f in os.listdir(carpeta_imagenes) 
-            if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-    
-    # Filtrar archivos que tienen etiquetas
-    archivos_validos = []
-    for f in archivos:
-        if os.path.exists(os.path.join(carpeta_txt, f + '.txt')):
-            archivos_validos.append(f)
-    
+    limpiar_directorios()
+
+    archivos = [f.split('.')[0] for f in os.listdir(carpeta_imagenes)
+                if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    archivos_validos = [f for f in archivos if os.path.exists(os.path.join(carpeta_txt, f + '.txt'))]
+
     np.random.shuffle(archivos_validos)
     total = len(archivos_validos)
-    
-    # Calcular divisiones
     train_end = int(porcentajes[0] * total)
     val_end = train_end + int(porcentajes[1] * total)
-    
-    # Dividir
+
     conjuntos = {
         'train': archivos_validos[:train_end],
         'val': archivos_validos[train_end:val_end],
         'test': archivos_validos[val_end:]
     }
-    
-    # Función para copiar archivos
+
     def copiar(subset, archivos):
         for base in tqdm(archivos, desc=f'Copiando {subset}'):
-            # Copiar imagen
-            origen_img = os.path.join(carpeta_imagenes, base + '.jpg')
-            destino_img = os.path.join(carpeta_destino, 'images', subset, base + '.jpg')
-            if os.path.exists(origen_img):
-                shutil.copy(origen_img, destino_img)
-            
-            # Copiar etiqueta
-            origen_txt = os.path.join(carpeta_txt, base + '.txt')
-            destino_txt = os.path.join(carpeta_destino, 'labels', subset, base + '.txt')
-            if os.path.exists(origen_txt):
-                shutil.copy(origen_txt, destino_txt)
-    
-    # Procesar todos los conjuntos
+            # Imagen
+            for ext in ['.jpg', '.jpeg', '.png']:
+                origen_img = os.path.join(carpeta_imagenes, base + ext)
+                if os.path.exists(origen_img):
+                    shutil.copy(origen_img, os.path.join(carpeta_destino, 'images', subset, base + ext))
+                    break
+            # Etiqueta
+            shutil.copy(os.path.join(carpeta_txt, base + '.txt'),
+                        os.path.join(carpeta_destino, 'labels', subset, base + '.txt'))
+
     for subset, archivos in conjuntos.items():
         copiar(subset, archivos)
-    
-    # Crear archivo YAML
-    with open(os.path.join(carpeta_destino, 'dataset.yaml'), 'w') as f:
-        f.write(f"""path: {os.path.abspath(carpeta_destino)}
-        train: images/train
-        val: images/val
-        test: images/test
 
-        names:
-        0: '0'
-        1: '1'
-        2: '2'
-        3: '3'
-        4: '4'
-        5: '5'
-        6: '6'
-        7: '7'
-        8: '8'
-        9: '9'
-        10: ','
-        11: '/'
-        12: '*'
-        """)
-    
-    print("\nDivisión completada:")
-    print(f"- Train: {len(conjuntos['train'])} imágenes")
-    print(f"- Val: {len(conjuntos['val'])} imágenes")
-    print(f"- Test: {len(conjuntos['test'])} imágenes")
+    data_yaml = {
+        'train': os.path.join(carpeta_destino, 'images/train'),
+        'val': os.path.join(carpeta_destino, 'images/val'),
+        'test': os.path.join(carpeta_destino, 'images/test'),
+        'nc': N_CLASSES,
+        'names': class_names
+    }
+
+    with open(os.path.join(carpeta_destino, 'data.yaml'), 'w') as f:
+        yaml.dump(data_yaml, f, default_flow_style=False)
+
+    print("\n División completada y archivo 'data.yaml' generado.")
+    print(f"Train: {len(conjuntos['train'])} imágenes")
+    print(f"Val:   {len(conjuntos['val'])} imágenes")
+    print(f"Test:  {len(conjuntos['test'])} imágenes")
 
 if __name__ == '__main__':
     dividir_dataset()

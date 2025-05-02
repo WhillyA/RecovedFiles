@@ -37,7 +37,16 @@ for archivo, anotaciones in datos.items():
         print(f"Error abriendo {archivo}: {str(e)}")
         continue
     
-    anotaciones_ordenadas = sorted(anotaciones, key=lambda x: int(x['x1']))
+    # Eliminar duplicados de anotaciones (por coordenadas)
+    anotaciones_unicas = []
+    anotaciones_vistas = set()
+    for anotacion in anotaciones:
+        coords = (anotacion['x1'], anotacion['y1'], anotacion['x2'], anotacion['y2'])
+        if coords not in anotaciones_vistas:
+            anotaciones_unicas.append(anotacion)
+            anotaciones_vistas.add(coords)
+
+    anotaciones_ordenadas = sorted(anotaciones_unicas, key=lambda x: int(x['x1']))
     txt_path = os.path.join(output_dir, "labels", archivo.replace(".jpg", ".txt"))
     
     with open(txt_path, 'w') as f_txt:
@@ -70,4 +79,4 @@ for archivo, anotaciones in datos.items():
     except Exception as e:
         print(f"Error copiando {archivo}: {str(e)}")
 
-print("Proceso completado con validación de coordenadas.")
+print("Proceso completado con validación de coordenadas y eliminación de duplicados.")
