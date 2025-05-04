@@ -8,8 +8,8 @@ from PIL import ImageTk, Image
 
 
 # Configuración
-IMAGE_FOLDER = "./imagenes/class_3/regions-labels/regions/preciot"
-TXT_FILE = "./csv/precioCRNN.txt"  # Cambiado a archivo TXT
+IMAGE_FOLDER = "./imagenes/class_3/regions-labels/regions/cantidad"
+TXT_FILE = "./csv/cantidadCRNN.txt"  # Cambiado a archivo TXT
 class ImageLabeler:
     def __init__(self, root, image_folder, txt_file):
         self.root = root
