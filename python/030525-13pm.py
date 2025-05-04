@@ -110,7 +110,7 @@ class ImageLabeler:
                 self.entry.insert(0, self.existing_data[img_name])
 
     def save_entry(self):
-        value = self.entry.get().strip()
+        value = self.entry.get()
         if value:
             self.existing_data[self.current_image_name] = value
 
