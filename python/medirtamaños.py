@@ -28,7 +28,7 @@ def analizar_imagenes(carpeta):
     }
 
 if __name__ == "__main__":
-    carpeta = "./dataset_yoloNumeros/images"
+    carpeta = "./imagenes/class_3/regions-labels/regions/preciot"
     resultados = analizar_imagenes(carpeta)
     
     print("\n" + "="*40)
