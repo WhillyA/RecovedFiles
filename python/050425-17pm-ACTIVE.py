@@ -4,12 +4,11 @@ import numpy as np
 from tqdm import tqdm
 
 # Configuración (actualiza estas rutas según tu caso)
-#? codigo para organizar en carpertas para el entrenamiento en yolo 5 clase3
 carpeta_imagenes = "./imagenes/class_3"   # Carpeta original de imágenes
-carpeta_txt = "./imagenes/class_3/regions-labels/labels"              # Carpeta de etiquetas generadas por el primer script
+carpeta_txt = "./imagenes/class_3/regions-labels/labels"  # Carpeta de etiquetas
 carpeta_destino = "./datasets/yolov5_subclass3"   # Carpeta raíz para el dataset final
-p_train = 0.7  # Porcentaje entrenamiento
-p_val = 0.2    # Porcentaje validación (test será 1 - train - val)
+p_train = 0.75  # Porcentaje entrenamiento
+p_val = 0.15    # Porcentaje validación (test será 1 - train - val)
 
 def crear_estructura_yolov5():
     # Crear estructura de directorios requerida por YOLOv5
@@ -21,8 +20,15 @@ def crear_estructura_yolov5():
 def dividir_datos():
     crear_estructura_yolov5()
     
-    # Obtener lista de imágenes base (sin extensión)
-    archivos = [os.path.splitext(f)[0] for f in os.listdir(carpeta_imagenes) if f.endswith('.jpg')]
+    # Obtener lista de imágenes que tienen archivo .txt correspondiente
+    archivos = []
+    for f in os.listdir(carpeta_imagenes):
+        if f.lower().endswith(('.jpg', '.jpeg', '.png')):  # Soporta múltiples formatos
+            base_name = os.path.splitext(f)[0]
+            txt_path = os.path.join(carpeta_txt, f"{base_name}.txt")
+            if os.path.exists(txt_path):
+                archivos.append(base_name)
+    
     np.random.shuffle(archivos)  # Mezclar aleatoriamente
     
     # Calcular índices de división
@@ -47,12 +53,10 @@ def dividir_datos():
             txt_dst = os.path.join(carpeta_destino, 'labels', subset, f"{base_name}.txt")
             
             # Copiar imagen
-            if os.path.exists(img_src):
-                shutil.copy(img_src, img_dst)
+            shutil.copy(img_src, img_dst)  # Ya verificamos que existe
             
-            # Copiar etiqueta si existe
-            if os.path.exists(txt_src):
-                shutil.copy(txt_src, txt_dst)
+            # Copiar etiqueta
+            shutil.copy(txt_src, txt_dst)  # Ya verificamos que existe
     
     # Procesar todos los conjuntos
     copiar_archivos(train_files, 'train')

@@ -72,7 +72,7 @@ df_matriz = pd.DataFrame(
 df_matriz['Suma Real'] = df_matriz.sum(axis=1)
 
 # Filtrar top 25 caracteres
-top_caracteres = df_matriz['Suma Real'].nlargest(35).index.tolist()
+top_caracteres = df_matriz['Suma Real'].nlargest(90).index.tolist()
 df_filtrado = df_matriz.loc[top_caracteres, top_caracteres].copy()
 df_filtrado['Suma Real'] = df_matriz['Suma Real']
 
@@ -140,3 +140,12 @@ plt.text(
 
 plt.tight_layout()
 plt.show()
+
+# Guardar matriz filtrada (incluyendo columna 'Suma Real') en CSV
+df_filtrado_con_suma = df_filtrado.copy()
+df_filtrado_con_suma.to_csv(
+    "./sadsa/matriz_confusion30.csv", 
+    index=True, 
+    encoding='utf-8-sig',
+    sep=','
+)
