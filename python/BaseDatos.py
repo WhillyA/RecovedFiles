@@ -30,7 +30,7 @@ def insertar_nota_venta(num_serie, fecha, cliente, detalles):
         texto_detalle = detalle["detalle"]
         cantidad = detalle["cantidad"]
         precioU = detalle["precioU"]
-        precioT = cantidad * precioU
+        precioT = detalle["precioT"]
 
         cursor.execute("INSERT INTO producto DEFAULT VALUES")
         id_prod = cursor.lastrowid
@@ -120,7 +120,8 @@ class VentaApp:
                 
                 "cantidad": cantidad,
                 "detalle": detalle,
-                "precioU": precioU
+                "precioU": precioU,
+                "precioT": precioT
             })
 
             self.lista_detalles.insert(tk.END, f"{detalle} | Cant: {cantidad} | PU: {precioU} | PT: {precioT}\n")
@@ -129,6 +130,7 @@ class VentaApp:
             self.detalle_entry.delete(0, tk.END)
             self.cantidad_entry.delete(0, tk.END)
             self.precio_entry.delete(0, tk.END)
+            self.precioT_entry.delete(0, tk.END)
         except ValueError:
             messagebox.showerror("Error", "Cantidad y precio deben ser numéricos")
 
